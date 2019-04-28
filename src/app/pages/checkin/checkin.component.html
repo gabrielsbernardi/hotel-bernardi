@@ -34,7 +34,6 @@
             </mat-form-field>
             
             <mat-checkbox formControlName="adicionalVeiculoCheckControl" style="width: 100%; padding-left: 20px; padding-right: 20px;">Possui Veículo</mat-checkbox>
-
             
         </form>
 
@@ -78,13 +77,13 @@
                     <!-- DATA ENTRADA -->
                     <ng-container matColumnDef="dataEntrada">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Data da Entrada</mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.dataEntrada}}</mat-cell>
+                        <mat-cell *matCellDef="let element">{{element.dataEntrada | date:'dd/MM/yyyy HH:mm'}}</mat-cell>
                     </ng-container>
 
                     <!-- DATA SAÍDA -->
                     <ng-container matColumnDef="dataSaida">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Data da Saída</mat-header-cell>
-                        <mat-cell *matCellDef="let element">{{element.dataSaida}}</mat-cell>
+                        <mat-cell *matCellDef="let element">{{element.dataSaida | date:'dd/MM/yyyy HH:mm'}}</mat-cell>
                     </ng-container>
 
                     <!-- ADICIONAL VEICULO -->
