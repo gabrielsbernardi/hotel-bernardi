@@ -1,0 +1,15 @@
+::ng-deep .style-succes {
+    color: #ffffff !important;
+    background-color: #3579b6 !important;
+}
+::ng-deep .style-succes .mat-simple-snackbar-action {
+    color: #ffffff;
+}
+
+::ng-deep .style-error {
+    color: #ffffff !important;
+    background-color: #cc3333 !important;
+}
+::ng-deep .style-error .mat-simple-snackbar-action {
+    color: #ffffff;
+}

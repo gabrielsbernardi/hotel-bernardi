@@ -1,1 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    position: relative;
+    margin: 0px;
+}
+
+table {
+    width: 100%;
+}
+
+.main-color {
+    background-color: #00C89A
+}
+
+.text-color {
+    color: #3579b6;
+}
+
+.secondary-color {
+    background-color: #3579b6;
+    color: #FFFFFF
+}
+
+.div-border {
+    border-width: medium;
+    border-style: solid;
+    border-color: #3579b6;
+    border-radius: 10px;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle, .mat-radio-outer-circle {
+    border-color: #3579b6 !important;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle{
+    background-color: #3579b6 !important;
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
+    background-color: #3579b6 !important; /* Red background for example */
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,23 @@
+<h1 mat-dialog-title class="text-color">Inclusão de Hóspede</h1>
+
+<form [formGroup]="hospedeFormGroup">
+    <div mat-dialog-content>
+
+        <mat-form-field style="width: 100%">
+            <input matInput placeholder="Nome" formControlName="nome" required>
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%">
+            <input matInput placeholder="CPF" formControlName="documento" required>
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%">
+            <input matInput placeholder="Telefone" formControlName="telefone" required>
+        </mat-form-field>
+
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancelar</button>
+        <button mat-button cdkFocusInitial class="secondary-color" (click)="saveHospede()">Salvar</button>
+    </div>
+</form>

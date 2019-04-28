@@ -1,0 +1,114 @@
+<div style="padding: 20px">
+    <button mat-raised-button class="secondary-color" style="margin-bottom: 8px; margin-top: 58px;" (click)="openDialog()">Incluir Hóspede</button>
+
+    <div class="div-border" style="margin-bottom: 8px;">
+
+        <mat-toolbar class="secondary-color" style="max-height: 38px; font-size: 16px;">
+            <p>Novo Check-in</p>
+        </mat-toolbar>
+
+        <form [formGroup]="checkinFormGroup" style="padding: 20px;">
+        
+            <div style="width: 100%;">
+                <mat-form-field style="width: 46%; padding-left: 20px; padding-right: 20px;">
+                    <input matInput [matDatepicker]="pickerEntrada" placeholder="Data de Entrada *" formControlName="dataEntradaControl" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="pickerEntrada"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerEntrada #dp3 disabled="false"></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field style="width: 46%; padding-left: 20px; padding-right: 20px;">
+                    <input matInput [matDatepicker]="pickerSaida" placeholder="Data de Saída" formControlName="dataSaidaControl" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="pickerSaida"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerSaida #dp3 disabled="false"></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            
+            <mat-form-field style="width: 46%; padding-left: 20px; padding-right: 20px;">
+                <input type="text" placeholder="Hóspede" aria-label="Hóspede" matInput formControlName="hospedeAutoCompControl" [matAutocomplete]="auto" required>
+                <mat-autocomplete #auto="matAutocomplete" >
+                    <mat-option *ngFor="let hospede of hospedes" [value]="hospede.id">
+                        {{hospede.nome}} - {{hospede.documento}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            
+            <mat-checkbox formControlName="adicionalVeiculoCheckControl" style="width: 100%; padding-left: 20px; padding-right: 20px;">Possui Veículo</mat-checkbox>
+
+            
+        </form>
+
+        <div style="padding-left: 40px; padding-bottom: 20px;">
+            <button mat-button class="secondary-color" (click)="saveCheckin()">Salvar</button>
+        </div>
+
+    </div>
+
+    <div class="div-border">
+
+        <mat-toolbar class="secondary-color" style="max-height: 38px; font-size: 16px;">
+            <p>Consultas</p>
+        </mat-toolbar>
+
+        <div style="padding: 20px;">
+
+            <div style="padding-left: 20px; padding-bottom: 20px;">
+                <label id="radio-group-label">Filtrar Por:</label>
+            </div>
+            <mat-radio-group aria-labelledby="radio-group-label" [(ngModel)]="somenteAberto" (change)="getCheckins()" style="width: 100%; padding-left: 20px;">
+                <mat-radio-button value="1" style="padding-right: 20px;">Pessoas ainda presentes</mat-radio-button>
+                <mat-radio-button value="2">Pessoas que já deixaram o hotel</mat-radio-button>
+            </mat-radio-group>
+
+            <div>
+                <mat-table [dataSource]="checkins" style="padding-left: 20px; padding-right: 20px; padding-top: 20px;" matSort>
+
+                    <!-- NOME -->
+                    <ng-container matColumnDef="nome">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Nome</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.nome}}</mat-cell>
+                    </ng-container>
+
+                    <!-- DOCUMENTO -->
+                    <ng-container matColumnDef="documento">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Documento</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.documento}}</mat-cell>
+                    </ng-container>
+
+                    <!-- DATA ENTRADA -->
+                    <ng-container matColumnDef="dataEntrada">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Data da Entrada</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.dataEntrada}}</mat-cell>
+                    </ng-container>
+
+                    <!-- DATA SAÍDA -->
+                    <ng-container matColumnDef="dataSaida">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Data da Saída</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.dataSaida}}</mat-cell>
+                    </ng-container>
+
+                    <!-- ADICIONAL VEICULO -->
+                    <ng-container matColumnDef="adicionalVeiculo">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Adicional de Veículo</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.adicionalVeiculo}}</mat-cell>
+                    </ng-container>
+
+                    <!-- VALOR GASTO -->
+                    <ng-container matColumnDef="valorGasto">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Valor Gasto (R$)</mat-header-cell>
+                        <mat-cell *matCellDef="let element">{{element.valorGasto}}</mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+                    <!--<mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':checkins!=null}"></mat-footer-row>
+                    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(checkins!=null && checkins.data.length==0)}"></mat-footer-row>-->
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+
+    </div>
+
+</div>
