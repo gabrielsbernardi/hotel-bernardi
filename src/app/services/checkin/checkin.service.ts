@@ -17,10 +17,10 @@ export class CheckinService {
   }
 
   saveCheckin(hospede, dataEntrada, dataSaida, adicionalVeiculo) {
-    adicionalVeiculo = adicionalVeiculo == null ? false : adicionalVeiculo;
+    adicionalVeiculo = (adicionalVeiculo == null || adicionalVeiculo == "") ? false : adicionalVeiculo;
     
     return this.http.post<any>(this.PATH + 'insertUpdateCheckIn', {
-      hospedeId: hospede,
+      hospedeDoc: hospede,
       dataEntrada: dataEntrada,
       dataSaida: dataSaida,
       adicionalVeiculo: adicionalVeiculo

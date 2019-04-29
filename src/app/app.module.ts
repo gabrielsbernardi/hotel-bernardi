@@ -17,12 +17,14 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatMomentDateModule, MomentDateAdapter } from "@angular/material-moment-adapter";
 
 import { AppComponent } from './app.component';
 import { CheckinComponent, HospedeDialog } from './pages/checkin/checkin.component';
 
 import { CheckinService } from './services/checkin/checkin.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { HospedeService } from './services/hospede/hospede.service';
 
 @NgModule({
   declarations: [
@@ -49,12 +51,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     ReactiveFormsModule,
     MatCheckboxModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatMomentDateModule
   ],
   entryComponents: [
     HospedeDialog
   ],
-  providers: [ CheckinService ],
+  providers: [ CheckinService, HospedeService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

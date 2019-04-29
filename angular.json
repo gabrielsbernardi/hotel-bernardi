@@ -84,7 +84,9 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/js/jquery.mask.min.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
