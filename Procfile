@@ -1,1 +1,1 @@
-worker: node server.js
+worker: ng serve
