@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CheckinService {
 
-  private PATH = "http://localhost:8080/HotelService/restHotel/checkinService/"
+  private PATH = "https://hotel-bernardi-service.herokuapp.com/restHotel/checkinService/"
 
   constructor(private http: HttpClient) { }
 
