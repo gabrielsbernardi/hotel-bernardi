@@ -29,7 +29,7 @@ export class CheckinComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['nome', 'documento', 'dataEntrada', 'dataSaida', 'adicionalVeiculo', 'valorGasto'];
+  displayedColumns: string[] = ['editar', 'nome', 'documento', 'dataEntrada', 'dataSaida', 'adicionalVeiculo', 'valorGasto'];
   somenteAberto = '1';
   checkins;
   hospedes;
@@ -48,6 +48,7 @@ export class CheckinComponent implements OnInit {
 
   createFormGroup() {
     this.checkinFormGroup = new FormGroup({
+      idCheckin: new FormControl(''),
       hospedeAutoCompControl: new FormControl('', Validators.required),
       dataEntradaControl: new FormControl('', Validators.required),
       horaEntradaControl: new FormControl('', Validators.required),
@@ -62,6 +63,7 @@ export class CheckinComponent implements OnInit {
       list => {
         let array = list.map(item => {
           return {
+            idCheckin: item.idCheckin,
             nome: item.nome,
             documento: item.documento,
             dataEntrada: item.dataEntrada,
@@ -119,8 +121,9 @@ export class CheckinComponent implements OnInit {
           var horaMinutoSaida = horaSaida.split(":");
           var dataSaidaFinal = new Date(dataSaida);
           dataSaidaFinal.setHours(horaMinutoSaida[0], horaMinutoSaida[1]);
-
-          this.checkinService.saveCheckin(this.checkinFormGroup.get('hospedeAutoCompControl').value,
+          
+          this.checkinService.saveCheckin(this.checkinFormGroup.get('idCheckin').value,
+                                          this.checkinFormGroup.get('hospedeAutoCompControl').value,
                                           dataEntrada,
                                           dataSaidaFinal,
                                           this.checkinFormGroup.get('adicionalVeiculoCheckControl').value)
@@ -191,6 +194,47 @@ export class CheckinComponent implements OnInit {
 
   public snackbarError(message) {
     this.snackBar.open(message, 'Fechar', this.configError);
+  }
+
+  editCheckin(editData) {
+    var dataEntrada = new Date(editData.dataEntrada);
+
+    var dataSaida;
+    if (editData.dataSaida) {
+      dataSaida = new Date(editData.dataSaida);
+    }
+
+    this.checkinFormGroup = new FormGroup({
+      idCheckin: new FormControl(editData.idCheckin),
+      hospedeAutoCompControl: new FormControl(editData.nome + ' - ' + editData.documento, Validators.required),
+      dataEntradaControl: new FormControl(dataEntrada, Validators.required),
+      horaEntradaControl: new FormControl(this.getHoras(dataEntrada), Validators.required),
+      dataSaidaControl: new FormControl(dataSaida),
+      horaSaidaControl: new FormControl(this.getHoras(dataSaida)),
+      adicionalVeiculoCheckControl: new FormControl(editData.adicionalVeiculo)
+    });
+    
+    this.snackbarSuccess("Check-in carregado com sucesso!");
+  }
+
+  getHoras(dataFull) {
+    var horas = '';
+    if (dataFull != null && dataFull != '') {
+      if (dataFull.getHours().toString().length == 1) {
+        horas = '0' + dataFull.getHours();
+      } else {
+        horas = dataFull.getHours();
+      }
+
+      horas += ':'
+
+      if (dataFull.getMinutes().toString().length == 1) {
+        horas += '0' + dataFull.getMinutes();
+      } else {
+        horas += dataFull.getMinutes();
+      }
+    }
+    return horas;
   }
 }
 

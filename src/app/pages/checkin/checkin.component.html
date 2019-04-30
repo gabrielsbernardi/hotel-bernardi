@@ -4,7 +4,7 @@
     <div class="div-border" style="margin-bottom: 8px;">
 
         <mat-toolbar class="secondary-color" style="max-height: 38px; font-size: 16px;">
-            <p>Novo Check-in</p>
+            <p>Check-in</p>
         </mat-toolbar>
 
         <form [formGroup]="checkinFormGroup" style="padding: 20px;">
@@ -68,6 +68,13 @@
             <div>
                 <mat-table [dataSource]="checkins" style="padding-left: 20px; padding-right: 20px; padding-top: 20px;" matSort>
 
+                    <ng-container matColumnDef="editar">
+                        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <button mat-button class="" (click)="editCheckin(element)"><mat-icon>edit</mat-icon></button>
+                        </mat-cell>
+                    </ng-container>
+
                     <!-- NOME -->
                     <ng-container matColumnDef="nome">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Nome</mat-header-cell>
@@ -107,8 +114,6 @@
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 
-                    <!--<mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':checkins!=null}"></mat-footer-row>
-                    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(checkins!=null && checkins.data.length==0)}"></mat-footer-row>-->
                 </mat-table>
                 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
             </div>

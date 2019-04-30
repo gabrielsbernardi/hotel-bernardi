@@ -18,6 +18,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatMomentDateModule, MomentDateAdapter } from "@angular/material-moment-adapter";
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
 import { CheckinComponent, HospedeDialog } from './pages/checkin/checkin.component';
@@ -52,7 +53,8 @@ import { HospedeService } from './services/hospede/hospede.service';
     MatCheckboxModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatIconModule
   ],
   entryComponents: [
     HospedeDialog

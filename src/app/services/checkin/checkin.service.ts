@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CheckinService {
 
-  private PATH = "https://hotel-bernardi-service.herokuapp.com/restHotel/checkinService/"
+  private PATH = "https://hotel-bernardi-service.herokuapp.com/restHotel/checkinService/";
 
   constructor(private http: HttpClient) { }
 
@@ -16,10 +16,11 @@ export class CheckinService {
     return this.http.post<any[]>(this.PATH + 'getCheckins', {somenteAbertoFilter: aberto});
   }
 
-  saveCheckin(hospede, dataEntrada, dataSaida, adicionalVeiculo) {
+  saveCheckin(idCheckin, hospede, dataEntrada, dataSaida, adicionalVeiculo) {
     adicionalVeiculo = (adicionalVeiculo == null || adicionalVeiculo == "") ? false : adicionalVeiculo;
     
     return this.http.post<any>(this.PATH + 'insertUpdateCheckIn', {
+      id: idCheckin,
       hospedeDoc: hospede,
       dataEntrada: dataEntrada,
       dataSaida: dataSaida,
