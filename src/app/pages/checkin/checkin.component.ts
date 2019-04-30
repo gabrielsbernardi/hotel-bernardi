@@ -94,51 +94,74 @@ export class CheckinComponent implements OnInit {
 
   saveCheckin() {
     if (this.checkinFormGroup.valid) {
-      var dataSaida = this.checkinFormGroup.get('dataSaidaControl').value;
-      var horaSaida = this.checkinFormGroup.get('horaSaidaControl').value;
+      if (this.varHoraValida()) {
+        var dataSaida = this.checkinFormGroup.get('dataSaidaControl').value;
+        var horaSaida = this.checkinFormGroup.get('horaSaidaControl').value;
 
-      var dataSaidaSemHora = (dataSaida != null || dataSaida != "") && (horaSaida == null || horaSaida == "");
-      var horaSaidaSemData = (horaSaida != null || horaSaida != "") && (dataSaida == null || dataSaida == "");
+        var dataSaidaSemHora = (dataSaida != null && dataSaida != "") && (horaSaida == null || horaSaida == "");
+        var horaSaidaSemData = (horaSaida != null && horaSaida != "") && (dataSaida == null || dataSaida == "");
 
-      var salvar = true;
+        var salvar = true;
 
-      if (dataSaidaSemHora) {
-        salvar = false;
-        this.snackbarError("Hora de Saída não informada");
-      } else if (horaSaidaSemData)  {
-        salvar = false;
-        this.snackbarError("Data de Saída não informada");
-      }
+        if (dataSaidaSemHora) {
+          salvar = false;
+          this.snackbarError("Hora de Saída não informada");
+        } else if (horaSaidaSemData)  {
+          salvar = false;
+          this.snackbarError("Data de Saída não informada");
+        }
 
-      if (salvar) {
-        var horaEntrada = this.checkinFormGroup.get('horaEntradaControl').value.split(":");
-        var dataEntrada = new Date(this.checkinFormGroup.get('dataEntradaControl').value);
-        dataEntrada.setHours(horaEntrada[0], horaEntrada[1]);
+        if (salvar) {
+          var horaEntrada = this.checkinFormGroup.get('horaEntradaControl').value.split(":");
+          var dataEntrada = new Date(this.checkinFormGroup.get('dataEntradaControl').value);
+          dataEntrada.setHours(horaEntrada[0], horaEntrada[1]);
 
-        var horaMinutoSaida = horaSaida.split(":");
-        var dataSaidaFinal = new Date(dataSaida);
-        dataSaidaFinal.setHours(horaMinutoSaida[0], horaMinutoSaida[1]);
+          var horaMinutoSaida = horaSaida.split(":");
+          var dataSaidaFinal = new Date(dataSaida);
+          dataSaidaFinal.setHours(horaMinutoSaida[0], horaMinutoSaida[1]);
 
-        this.checkinService.saveCheckin(this.checkinFormGroup.get('hospedeAutoCompControl').value,
-                                        dataEntrada,
-                                        dataSaidaFinal,
-                                        this.checkinFormGroup.get('adicionalVeiculoCheckControl').value)
-        .subscribe(item => {
-          if (item.isSucess) {
-            this.somenteAberto = '1';
-            this.getCheckins();
+          this.checkinService.saveCheckin(this.checkinFormGroup.get('hospedeAutoCompControl').value,
+                                          dataEntrada,
+                                          dataSaidaFinal,
+                                          this.checkinFormGroup.get('adicionalVeiculoCheckControl').value)
+          .subscribe(item => {
+            if (item.isSucess) {
+              this.somenteAberto = '1';
+              this.getCheckins();
 
-            this.createFormGroup();
+              this.createFormGroup();
 
-            this.snackbarSuccess(item.message);
-          } else {
-            this.snackbarError(item.message);
-          }
-        });
+              this.snackbarSuccess(item.message);
+            } else {
+              this.snackbarError(item.message);
+            }
+          });
+        }
       }
     }
   }
   
+  varHoraValida() {
+    var horaEntrada = this.checkinFormGroup.get('horaEntradaControl').value;
+    var totalEntrada = parseInt(horaEntrada.replace(":", ""));
+
+    if (totalEntrada > 2359) {
+      this.snackbarError("Hora de Entrada inválida");
+      return false;
+    }
+
+    var horaSaida = this.checkinFormGroup.get('horaSaidaControl').value;
+    var totalSaida = parseInt(horaSaida.replace(":", ""));
+
+    if (totalSaida > 2359) {
+      this.snackbarError("Hora de Saida inválida");
+      return false;
+
+    }
+
+    return true;
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(HospedeDialog, {
       width: '450px',
