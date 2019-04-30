@@ -21,7 +21,7 @@ export class CheckinService {
     
     return this.http.post<any>(this.PATH + 'insertUpdateCheckIn', {
       id: idCheckin,
-      hospedeDoc: hospede,
+      hospedeDoc: hospede.split(" - ")[1],
       dataEntrada: dataEntrada,
       dataSaida: dataSaida,
       adicionalVeiculo: adicionalVeiculo
